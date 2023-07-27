@@ -1,4 +1,4 @@
-# Top 34 Spring boot Questions for 2 years Experienced
+# Top 37 Spring boot Questions for 2 years Experienced
 
 ## What is Spring Boot? How is it different from the Spring Framework?
 
@@ -997,7 +997,94 @@ Overall, dependency injection is a fundamental concept in Spring Boot that enabl
 
 <br>
 
+## How many ways we can achieve dependency injection? Explain with relavent code examples.
 
+<br>
+
+In Java and Spring, there are several ways to achieve dependency injection. Here are some of the commonly used approaches:
+
+1. Constructor Injection:
+   - In constructor injection, dependencies are provided through a class constructor.
+   - Example:
+   ```java
+   public class MyClass {
+       private final Dependency dependency;
+
+       public MyClass(Dependency dependency) {
+           this.dependency = dependency;
+       }
+       // ...
+   }
+   ```
+   In this example, the `MyClass` constructor accepts a `Dependency` object as a parameter, and the dependency is injected during object creation.
+
+2. Setter Injection:
+   - Setter injection involves providing dependencies through setter methods.
+   - Example:
+   ```java
+   public class MyClass {
+       private Dependency dependency;
+
+       public void setDependency(Dependency dependency) {
+           this.dependency = dependency;
+       }
+       // ...
+   }
+   ```
+   In this example, the `setDependency` method is used to set the `Dependency` object after the `MyClass` object is created.
+
+3. Field Injection:
+   - Field injection involves injecting dependencies directly into class fields.
+   - Example:
+   ```java
+   public class MyClass {
+       @Autowired
+       private Dependency dependency;
+       // ...
+   }
+   ```
+   In this example, the `Dependency` object is injected directly into the `dependency` field using the `@Autowired` annotation.
+
+4. Interface Injection (not commonly used in Spring):
+   - Interface injection involves implementing an interface that defines the methods for injecting dependencies.
+   - Example:
+   ```java
+   public interface DependencyInjector {
+       void injectDependency(Dependency dependency);
+   }
+
+   public class MyClass implements DependencyInjector {
+       private Dependency dependency;
+
+       @Override
+       public void injectDependency(Dependency dependency) {
+           this.dependency = dependency;
+       }
+       // ...
+   }
+   ```
+   In this example, the `MyClass` implements the `DependencyInjector` interface and provides an implementation for injecting the `Dependency` object.
+
+5. Method Injection (not commonly used in Spring):
+   - Method injection involves providing dependencies through a method parameter.
+   - Example:
+   ```java
+   public class MyClass {
+       private Dependency dependency;
+
+       public void injectDependency(Dependency dependency) {
+           this.dependency = dependency;
+       }
+       // ...
+   }
+   ```
+   In this example, the `injectDependency` method is used to inject the `Dependency` object into the `MyClass` object.
+
+In Spring, the preferred approach is to use constructor injection or setter injection. Field injection is also commonly used, but it is recommended to use it sparingly and only for certain scenarios (e.g., when working with frameworks that require default constructors).
+
+It's worth noting that in all the above examples, the `Dependency` object is assumed to be managed by Spring (either annotated with `@Component` or configured as a bean in the application context) for automatic dependency injection to work properly.
+
+<br>
 
 ## How do you test a Spring Boot application? What testing frameworks does Spring Boot support?
 
@@ -1465,6 +1552,51 @@ In summary, <code>PUT</code> is typically used for updating or replacing existin
 
 <br>
 
+## What is the difference between PUT and PATCH methods?
+
+<br>
+
+The main difference between the PUT and PATCH methods lies in how they are used to update resources in a RESTful API:
+
+PUT Method:
+- The PUT method is used to completely replace an existing resource with a new representation.
+- When sending a PUT request, the entire representation of the resource is included in the request payload.
+- If a resource with the specified identifier already exists, the PUT request replaces the existing resource with the new representation provided in the request.
+- If a resource with the specified identifier doesn't exist, the PUT request typically creates a new resource with the provided representation.
+- In summary, the PUT method is idempotent, meaning multiple identical requests have the same effect as a single request.
+
+Example PUT Request:
+```
+PUT /api/users/123 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "age": 30
+}
+```
+
+PATCH Method:
+- The PATCH method is used to partially update an existing resource. It allows modifying only specific fields or properties of a resource.
+- When sending a PATCH request, the request payload typically contains instructions specifying the changes to be applied to the resource.
+- The server then applies the provided changes to the existing resource, updating only the specified fields.
+- In contrast to the PUT method, a PATCH request does not require sending the entire representation of the resource. It operates on a "diff" or set of changes to be applied.
+- The PATCH method is also considered idempotent if the same set of changes is applied multiple times, resulting in the same final state.
+
+Example PATCH Request:
+```
+PATCH /api/users/123 HTTP/1.1
+Content-Type: application/json
+
+{
+  "age": 31
+}
+```
+
+In summary, the PUT method replaces the entire resource, while the PATCH method applies partial updates to an existing resource. The choice between PUT and PATCH depends on the desired behavior and the requirements of the API design.
+
+<br>
+
 ## How to connect your Spring boot application with multiple databases at the same time? Explain with code example.
 
 <br>
@@ -1699,3 +1831,81 @@ It's important to note that @RequestParam and @QueryParam serve similar purposes
 In summary, @PathVariable is used for extracting values from the URL path, @RequestParam is used for binding single query parameters, and @QueryParam is used in JAX-RS for the same purpose as @RequestParam.
 
 <br>
+
+## How can we manage application session in Spring boot. Explain with relavent code example.
+
+<br>
+
+In Spring Boot, you can manage application sessions using Spring Session, which provides a convenient way to store session data and allows for session management across multiple servers or containers. Spring Session supports various session storage options, such as Redis, JDBC, Hazelcast, and more. Here's an example of managing application sessions using Spring Session with Redis as the session store:
+
+1. Add the required dependencies to your `pom.xml` file:
+
+```xml
+<dependencies>
+  <!-- Other dependencies -->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-data-redis</artifactId>
+  </dependency>
+</dependencies>
+```
+
+2. Configure Redis as the session store in your `application.properties` file:
+
+```properties
+# Redis connection configuration
+spring.redis.host=localhost
+spring.redis.port=6379
+
+# Spring Session configuration
+spring.session.store-type=redis
+```
+
+3. Create a Spring Boot configuration class to enable Spring Session and configure Redis:
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+
+@Configuration
+@EnableRedisHttpSession
+public class SessionConfig {
+    // Additional configuration if needed
+}
+```
+
+4. Use the session in your application. For example, you can create a simple controller to read and write session attributes:
+
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpSession;
+
+@RestController
+public class SessionController {
+
+    @PostMapping("/session")
+    public void setSessionAttribute(HttpSession session) {
+        session.setAttribute("key", "value");
+    }
+
+    @GetMapping("/session")
+    public String getSessionAttribute(HttpSession session) {
+        String value = (String) session.getAttribute("key");
+        return "Session attribute value: " + value;
+    }
+}
+```
+
+In this example, the `setSessionAttribute` endpoint sets a session attribute with the key "key" and value "value". The `getSessionAttribute` endpoint retrieves the session attribute and returns it as a response.
+
+5. Start your Spring Boot application and access the `/session` endpoints. The session attribute will be stored in Redis, and you can retrieve it across multiple requests.
+
+With this setup, Spring Session takes care of managing the session, including creating and invalidating sessions, and storing session data in Redis. You can customize the session behavior further by configuring additional properties or using different session stores based on your requirements.
+
+Remember to configure and manage session timeouts, security considerations, and any other session-related settings based on your application's needs.

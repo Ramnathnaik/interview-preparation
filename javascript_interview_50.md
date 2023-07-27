@@ -79,7 +79,57 @@ Closures are useful because they allow functions to access and manipulate variab
 
 <br>
 
+## Explain the real world implementation of closure along with relavent code examples
 
+<br>
+
+Sure! Let's explore a real-world implementation of closures in JavaScript.
+
+A closure is created when a function is defined inside another function and the inner function has access to the variables and parameters of its outer function, even after the outer function has finished executing. This allows the inner function to "remember" and access the variables and scope of its outer function.
+
+A practical example where closures are commonly used is in event handling. Consider the scenario where you want to create multiple buttons dynamically, and each button should display a unique number when clicked. Closures can help achieve this by preserving the context of each button's number.
+
+```javascript
+function createButtons() {
+  for (var i = 1; i <= 5; i++) {
+    var button = document.createElement("button");
+    button.innerHTML = "Button " + i;
+    button.addEventListener("click", function () {
+      alert("Button " + i + " clicked");
+    });
+    document.body.appendChild(button);
+  }
+}
+
+createButtons();
+```
+
+In this example, the `createButtons` function dynamically creates five buttons. Each button has an event listener attached to it, which displays an alert message indicating which button was clicked. However, without closures, all the buttons will display "Button 6 clicked" because the value of `i` at the time the event is triggered is 6 (the final value of the loop).
+
+To solve this issue using closures, you can create a new scope for each button by using an immediately invoked function expression (IIFE) that captures the value of `i` at each iteration:
+
+```javascript
+function createButtons() {
+  for (var i = 1; i <= 5; i++) {
+    (function (num) {
+      var button = document.createElement("button");
+      button.innerHTML = "Button " + num;
+      button.addEventListener("click", function () {
+        alert("Button " + num + " clicked");
+      });
+      document.body.appendChild(button);
+    })(i);
+  }
+}
+
+createButtons();
+```
+
+In this updated code, an IIFE is used to create a new scope for each button. The `num` parameter of the IIFE captures the value of `i` at that particular iteration. This way, each button's event listener has its own unique `num` value, preserving the correct number when the button is clicked.
+
+By using closures, we are able to maintain the state of the `num` variable for each button, allowing the event listener to access its correct value when the button is clicked. This is a practical example of how closures can be used to solve a common problem in event handling scenarios.
+
+<br>
 
 ## How does prototypal inheritance work in JavaScript?
 
@@ -891,41 +941,6 @@ Each looping method has its own characteristics and use cases. The choice of met
 
 
 <br>
-
-
-
-## What is the purpose of the "use strict" directive in JavaScript?
-
-<br>
-
-
-
-The "use strict" directive in JavaScript enables strict mode, which is a way to opt into a stricter and more secure mode of JavaScript execution. When you include the "use strict" directive at the beginning of a script or a function, it activates strict mode for that specific scope.
-
-The purpose of using strict mode is to provide a set of stricter rules and eliminate certain JavaScript pitfalls, which helps in writing more reliable, maintainable, and error-free code. Here are some benefits and features of strict mode:
-
-1. Catching common mistakes: Strict mode helps catch and highlight common programming mistakes that would otherwise go unnoticed or silently fail. It turns certain mistakes into errors, making debugging easier and reducing the likelihood of introducing subtle bugs.
-
-2. Preventing the use of undeclared variables: In strict mode, assigning a value to an undeclared variable or using a variable without declaring it first results in a ReferenceError. Without strict mode, such assignments create a new global variable, which can lead to unintended consequences.
-
-3. Disabling variables as properties of the global object: In non-strict mode, when you declare a variable without using the var, let, or const keyword, it becomes a property of the global object (window in browsers, global in Node.js). Strict mode prevents this behavior, making the scope of variables more predictable and preventing accidental pollution of the global namespace.
-
-4. Restricting the use of reserved keywords: In strict mode, using reserved keywords (such as eval, arguments, or let) as variable or function names is not allowed, and it throws a syntax error. This helps avoid potential conflicts and unintended behavior caused by using reserved keywords.
-
-5. Throwing errors on assignments to read-only properties: In strict mode, assigning a value to a read-only property or a non-writable global variable throws a TypeError. This prevents accidental modifications to read-only properties and enhances security.
-
-6. Disabling duplicate parameter names: In strict mode, defining multiple function parameters with the same name is not allowed, and it throws a syntax error. This helps avoid potential bugs caused by mistakenly reusing parameter names.
-
-7. Restricting the use of this in non-method functions: In strict mode, when a function is called as a standalone function (not as a method or constructor), the value of this is set to undefined, which helps prevent accidental usage of the global object as this.
-
-8. Prohibiting delete on variables, functions, and function arguments: In strict mode, using the delete operator on variables, functions, and function arguments throws a SyntaxError. This disallows the deletion of variables and function declarations.
-
-By enabling strict mode, you can ensure that your code follows stricter rules and best practices, catching potential errors and avoiding JavaScript's more lenient and error-tolerant behavior. It helps in writing code that is less error-prone, more readable, and more consistent, aligning with modern JavaScript standards and improving overall code quality.
-
-
-<br>
-
-
 
 ## Explain the concept of event handling in JavaScript.
 

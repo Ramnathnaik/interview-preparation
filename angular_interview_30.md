@@ -210,7 +210,7 @@ There are four types of data binding in Angular:
 <h1>Welcome, {{ name }}</h1>
 ```
 
-In this example, the value of the name property in the component class is dynamically interpolated and displayed within the <h1> element.
+In this example, the value of the name property in the component class is dynamically interpolated and displayed within the element.
 
 2. Property Binding ([]): Property binding is another form of one-way data binding where you bind a property of an HTML element to a value or expression in the component class. It allows you to set the value of a property dynamically based on the component's data. Property binding is denoted by square brackets ([]). For example:
 

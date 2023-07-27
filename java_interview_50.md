@@ -1,12 +1,8 @@
-# Top 61 Java Interview Questions for 2 years Experienced
+# Top 77 Java Interview Questions for 2 years Experienced
 
 ## What is the difference between the stack and the heap in Java?
 
-
-
 <br>
-
-
 
 In Java, the stack and the heap are two distinct memory areas with different purposes:
 
@@ -15,14 +11,75 @@ In Java, the stack and the heap are two distinct memory areas with different pur
 
 To summarize, the stack is used for managing method execution and storing local variables, while the heap is used for dynamically allocating and deallocating objects in Java.
 
+<br>
+
+## Explain JDK, JRE and JVM
 
 <br>
 
+JDK, JRE, and JVM are key components of the Java platform that enable the development and execution of Java applications. Here's a brief explanation of each:
 
+JDK (Java Development Kit): The JDK is a software development kit that provides tools, libraries, and resources for developing Java applications. It includes the Java compiler (`javac`) for compiling Java source code into bytecode, the Java runtime environment (`java`) for executing Java applications, and various development tools such as debuggers, profilers, and documentation.
+
+JRE (Java Runtime Environment): The JRE is a subset of the JDK and is required to run Java applications. It includes the Java Virtual Machine (JVM) and the necessary class libraries and resources to execute Java bytecode. The JRE does not include the development tools like the compiler or the development-specific libraries.
+
+JVM (Java Virtual Machine): The JVM is the runtime environment in which Java bytecode is executed. It is responsible for interpreting or just-in-time compiling the bytecode into machine-specific instructions that can be executed by the underlying operating system. The JVM provides memory management, garbage collection, security, and other runtime services that enable the execution of Java applications on different platforms.
+
+In summary, the JDK is used for developing Java applications and includes the JRE, while the JRE is used for running Java applications and includes the JVM. The JVM is responsible for executing Java bytecode on a specific platform, providing the necessary runtime environment and services for Java applications to run.
+
+<br>
+
+## What are class loaders in Java?
+
+<br>
+
+In Java, class loaders are responsible for loading classes and interfaces into the Java Virtual Machine (JVM) at runtime. They play a crucial role in the dynamic nature of the Java platform by dynamically loading classes as they are needed.
+
+Here are the main types of class loaders in Java:
+
+1. Bootstrap Class Loader: It is the built-in class loader provided by the JVM and is responsible for loading core Java classes, such as those in the `java.lang` package. It is written in native code and is not written in Java itself.
+
+2. Extension Class Loader: It is responsible for loading classes from the Java Extension directories (`jre/lib/ext` or any other directory specified by the `java.ext.dirs` system property). These are additional libraries or extensions that provide functionality beyond the core Java platform.
+
+3. System Class Loader (also known as Application Class Loader): It is responsible for loading classes from the classpath specified by the `java.class.path` system property. It loads classes from the application's classpath, including the application's own classes.
+
+4. Custom Class Loaders: In addition to the built-in class loaders, Java allows developers to create custom class loaders to load classes from different sources, such as network locations, databases, or other custom repositories. Custom class loaders can be useful in scenarios like dynamic code loading, modularization, and security.
+
+Class loaders follow a delegation model, where each class loader first delegates the class loading request to its parent class loader. If the parent class loader cannot find the requested class, the child class loader attempts to load it. This delegation continues until the class is found or until the top-level Bootstrap Class Loader is reached.
+
+Class loaders enable dynamic class loading, dynamic runtime linking, and support for modularization in Java applications. They provide the flexibility to load classes from different sources and enable the dynamic and on-demand loading of classes at runtime.
+
+<br>
+
+## What is enum in Java?
+
+<br>
+
+In Java, an enum (short for "enumeration") is a special data type that allows you to define a set of named constants. It provides a way to represent a fixed set of values, which are typically related to each other in some way.
+
+Here are some key points about enums in Java:
+
+1. Declaration: Enums are declared using the `enum` keyword. Each enum constant is defined as a named value within the enum. For example:
+
+   ```java
+   enum Day {
+       MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+   }
+   ```
+
+2. Constants: The values defined within an enum are its constants. In the example above, `MONDAY`, `TUESDAY`, and so on are the constants of the `Day` enum.
+
+3. Usage: Enums can be used like any other data type in Java. You can declare variables of enum type, switch on enum constants, pass enum values as method arguments, and more.
+
+4. Methods and Fields: Enums can have methods and fields. You can define methods for enums, and each enum constant can have its own implementation of those methods. Enums can also have instance variables and constructors.
+
+5. Enum Instances: Each enum constant is an instance of the enum class. They are typically referred to using the enum type followed by the constant name, such as `Day.MONDAY` or `Day.TUESDAY`.
+
+Enums provide a type-safe way to represent a fixed set of values and make the code more readable and maintainable. They are commonly used to represent a limited set of options or to define constants with associated behavior. Enums can also be used in switch statements to handle different cases based on the enum constant.
+
+<br>
 
 ## Explain the difference between checked and unchecked exceptions in Java.
-
-
 
 <br>
 
@@ -368,11 +425,7 @@ It's important to note that autoboxing and unboxing can incur performance overhe
 
 ## What is the difference between an abstract class and an interface in Java?
 
-
-
 <br>
-
-
 
 In Java, both abstract classes and interfaces are used to define contracts and provide abstraction, but they have some key differences:
 
@@ -403,18 +456,47 @@ Here's a summary of the differences between abstract classes and interfaces:
 
 The choice between using an abstract class or an interface depends on the specific requirements and design of the program.
 
+<br>
+
+## What is Marker Interface? Explain with relavent example.
 
 <br>
 
+In Java, a marker interface is an interface that does not declare any methods or fields. It acts as a "marker" or "tag" to indicate that a class implementing the interface possesses certain characteristics or should be treated in a special way by the runtime environment.
 
+The marker interface does not provide any additional functionality or behavior by itself. Its purpose is to convey information to the compiler or runtime environment.
+
+Here is an example to illustrate the concept of a marker interface:
+
+```java
+// Marker interface
+interface SerializableMarker {
+    // Empty marker interface
+}
+
+// Class implementing the marker interface
+class Person implements SerializableMarker {
+    private String name;
+    private int age;
+
+    // Constructor, methods, and fields
+    // ...
+}
+```
+
+In the example above, we have a marker interface named `SerializableMarker`. It is an empty interface without any methods or fields. The `Person` class implements the `SerializableMarker` interface, indicating that instances of the `Person` class can be serialized.
+
+By implementing the `SerializableMarker` interface, the `Person` class conveys to the runtime environment that it possesses the characteristic of being serializable. This allows the runtime environment (e.g., Java Serialization API) to treat the `Person` objects accordingly during serialization and deserialization processes.
+
+Marker interfaces are typically used to provide metadata or indicate specific capabilities or requirements of classes. Some commonly used marker interfaces in Java include `Serializable`, `Cloneable`, and `RandomAccess`.
+
+It's important to note that with the introduction of annotations in Java, marker interfaces are less commonly used. Annotations provide a more flexible and expressive way to convey metadata and are often preferred over marker interfaces.
+
+<br>
 
 ## Explain the concept of polymorphism in Java with an example.
 
-
-
 <br>
-
-
 
 Polymorphism is a fundamental concept in object-oriented programming and refers to the ability of an object to take on different forms or behave differently based on the context. In Java, polymorphism is achieved through method overriding and method overloading.
 
@@ -1988,7 +2070,51 @@ In summary, the Collection API focuses on managing and manipulating collections 
 
 <br>
 
+## What is the difference between map and flatMap while using in Stream API. Explain with code example
 
+<br>
+
+In the Stream API of Java, both `map()` and `flatMap()` are intermediate operations used to transform elements in a stream. However, they have different behaviors and use cases.
+
+The `map()` operation applies a given function to each element of the stream and returns a new stream consisting of the results. It performs a one-to-one mapping, where each input element is transformed into exactly one output element.
+
+Here's an example of using `map()`:
+
+```java
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+List<Integer> nameLengths = names.stream()
+                                .map(String::length)
+                                .collect(Collectors.toList());
+
+System.out.println(nameLengths); // Output: [5, 3, 7]
+```
+
+In the above example, the `map()` operation transforms each name in the `names` list into its corresponding length using the `String::length` method reference. The resulting stream contains the lengths of the names, which are collected into a new list.
+
+On the other hand, the `flatMap()` operation is used to handle situations where the transformation function produces a stream of values instead of a single value. It flattens the streams generated by each element into a single stream of elements. It performs a one-to-many mapping, where each input element is transformed into zero or more output elements.
+
+Here's an example of using `flatMap()`:
+
+```java
+List<List<Integer>> numbers = Arrays.asList(
+    Arrays.asList(1, 2, 3),
+    Arrays.asList(4, 5, 6),
+    Arrays.asList(7, 8, 9)
+);
+
+List<Integer> allNumbers = numbers.stream()
+                                  .flatMap(List::stream)
+                                  .collect(Collectors.toList());
+
+System.out.println(allNumbers); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+In the above example, the `flatMap()` operation transforms each list of numbers into a stream of numbers using `List::stream`. The resulting stream contains all the numbers from the nested lists, which are collected into a new list.
+
+In summary, `map()` is used for one-to-one mappings, where each input element is transformed into exactly one output element. `flatMap()` is used for one-to-many mappings, where each input element is transformed into zero or more output elements, and the resulting streams are flattened into a single stream.
+
+<br>
 
 ## What are the benefits of using method references in the Stream API?
 
@@ -2352,55 +2478,7 @@ By using generics, developers can create more flexible and reusable code that is
 
 <br>
 
-
-
-## What is the difference between a local variable and an instance variable in Java?
-
-
-
-<br>
-
-
-
-In Java, a local variable and an instance variable are two different types of variables used in classes or methods.
-
-Here are the differences between local variables and instance variables:
-
-1. Declaration and Scope:
-
-* Local Variable: A local variable is declared within a method, constructor, or block of code. It is accessible only within that specific block of code where it is declared. The scope of a local variable is limited to the block in which it is defined.
-* Instance Variable: An instance variable is declared within a class but outside of any method or block. It is associated with an instance or object of the class. Instance variables are accessible throughout the class and can be accessed by any method or block within the class.
-
-2. Initialization:
-
-* Local Variable: Local variables must be explicitly initialized before they can be used. They do not have default values and need to be assigned a value within the block where they are declared.
-* Instance Variable: Instance variables are automatically initialized to default values if not explicitly initialized. The default values depend on the type of the variable (e.g., 0 for numeric types, false for booleans, null for reference types).
-
-3. Memory Allocation:
-
-* Local Variable: Local variables are stored on the stack and are created when a method or block is invoked. They are deallocated and removed from memory when the method or block completes execution.
-* Instance Variable: Instance variables are stored on the heap memory along with the object they belong to. They are created when an object is instantiated and exist as long as the object is in memory.
-
-4. Accessibility:
-
-* Local Variable: Local variables are accessible only within the block where they are declared. They are not visible or accessible outside of that block.
-* Instance Variable: Instance variables are accessible throughout the class. They can be accessed by any method, constructor, or block within the class.
-
-5. Usage and Purpose:
-
-* Local Variable: Local variables are typically used for temporary storage of data within a method or block. They serve as temporary placeholders for calculations, intermediate results, or method parameters.
-* Instance Variable: Instance variables define the state or properties of an object. They hold data specific to each instance of the class and are used to represent the characteristics or attributes of the objects.
-
-Understanding the distinction between local variables and instance variables is crucial for proper variable management and data handling in Java. Local variables are limited to their block scope and provide temporary storage, while instance variables represent the state of an object and are accessible throughout the class.
-
-
-<br>
-
-
-
 ## How can you handle file I/O operations in Java?
-
-
 
 <br>
 
@@ -2538,11 +2616,116 @@ In summary, the `wait()` method is used for thread synchronization and coordinat
 
 <br>
 
+## Explain about join method present in Thread class. Please provide relavent code examples
 
+<br>
+
+In Java, the `join()` method is a convenient way to wait for a thread to complete its execution before continuing with the current thread. When a thread invokes the `join()` method on another thread, it waits for that thread to finish before it can continue its execution.
+
+Here is a brief explanation of the `join()` method and how to use it:
+
+1. `join()` Method:
+   - The `join()` method is defined in the `Thread` class in Java.
+   - It allows one thread to wait for the completion of another thread.
+   - When a thread invokes the `join()` method on another thread, it waits until the specified thread terminates.
+
+2. Syntax:
+   ```java
+   public final void join() throws InterruptedException
+   public final synchronized void join(long millis) throws InterruptedException
+   public final synchronized void join(long millis, int nanos) throws InterruptedException
+   ```
+
+   - The `join()` method has three overloaded versions. The first version waits indefinitely until the thread terminates.
+   - The second and third versions allow you to specify a timeout duration to wait for the thread to finish.
+
+3. Usage Example:
+   ```java
+   public class JoinExample {
+       public static void main(String[] args) throws InterruptedException {
+           Thread thread1 = new Thread(() -> {
+               System.out.println("Thread 1 started");
+               try {
+                   Thread.sleep(2000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+               System.out.println("Thread 1 finished");
+           });
+
+           Thread thread2 = new Thread(() -> {
+               System.out.println("Thread 2 started");
+               try {
+                   Thread.sleep(3000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+               System.out.println("Thread 2 finished");
+           });
+
+           thread1.start();
+           thread2.start();
+
+           // Wait for thread1 to complete
+           thread1.join();
+
+           System.out.println("All threads finished");
+       }
+   }
+   ```
+
+   In the above example, two threads (`thread1` and `thread2`) are started. The main thread invokes the `join()` method on `thread1`, which causes the main thread to wait until `thread1` finishes its execution. Once `thread1` completes, the main thread continues executing and prints "All threads finished" to the console.
+
+The `join()` method is useful when you need to ensure that certain threads complete their execution before proceeding with the remaining tasks. It helps in coordination and synchronization between multiple threads in a program.
+
+<br>
+
+## Explain about the yeild method present in Thread class with relavent examples.
+
+<br>
+
+In Java, the `yield()` method is a static method defined in the `Thread` class that hints to the scheduler that the current thread is willing to yield its current use of the CPU. When a thread invokes `yield()`, it gives a hint to the scheduler that it is willing to pause its execution and allow other threads to run.
+
+Here is a brief explanation of the `yield()` method and how it works:
+
+1. `yield()` Method:
+   - The `yield()` method is a static method defined in the `Thread` class in Java.
+   - It is a hint to the scheduler that the current thread is willing to yield its current use of the CPU.
+   - The scheduler may or may not honor this hint depending on the implementation.
+
+2. Usage Example:
+   ```java
+   public class YieldExample {
+       public static void main(String[] args) {
+           Thread thread1 = new Thread(() -> {
+               for (int i = 0; i < 5; i++) {
+                   System.out.println("Thread 1 - " + i);
+                   Thread.yield();
+               }
+           });
+
+           Thread thread2 = new Thread(() -> {
+               for (int i = 0; i < 5; i++) {
+                   System.out.println("Thread 2 - " + i);
+                   Thread.yield();
+               }
+           });
+
+           thread1.start();
+           thread2.start();
+       }
+   }
+   ```
+
+   In the above example, two threads (`thread1` and `thread2`) are started. Each thread has a loop where it prints its thread name and a counter. Within the loop, the `yield()` method is invoked, giving a hint to the scheduler to potentially switch to another thread.
+
+   The actual effect of calling `yield()` depends on the underlying operating system and JVM implementation. In some cases, it may result in the current thread giving up its remaining time slice to allow other threads to run. However, it's important to note that `yield()` is a hint and the scheduler may or may not choose to honor it.
+
+The `yield()` method can be used in situations where a thread wants to voluntarily pause its execution and allow other threads to make progress. However, its usage is generally limited as the behavior is platform-dependent, and relying too heavily on `yield()` for thread coordination may not produce consistent results across different systems.
+
+<br>
 
 ## Explain the purpose of the synchronized keyword in Java.
-
-
 
 <br>
 
@@ -2587,7 +2770,32 @@ It is important to note that the `synchronized` keyword also establishes a happe
 
 <br>
 
+## What is the difference between synchronized method and synchronized block in Java? When and why we should prefer one above the other?
 
+<br>
+
+In Java, both synchronized methods and synchronized blocks are used to achieve thread safety and ensure that only one thread can access a particular section of code at a time. However, there are differences between the two approaches:
+
+1. Synchronized Method:
+   - When a method is declared as synchronized, it is referred to as a synchronized method. Only one thread can execute the synchronized method at a time.
+   - The lock associated with a synchronized method is the object on which the method is invoked (`this` reference for non-static methods).
+   - Synchronized methods are convenient to use as they automatically acquire and release the lock.
+   - Synchronized methods can only be used for instance methods or static methods of a class, not for arbitrary sections of code.
+
+2. Synchronized Block:
+   - A synchronized block is a section of code enclosed within a pair of braces (`{}`) and preceded by the `synchronized` keyword.
+   - The lock associated with a synchronized block can be any specific object or a class (`Class.class`) for static synchronization.
+   - Synchronized blocks provide more flexibility as you can explicitly specify the lock object and control the locking granularity.
+   - Multiple synchronized blocks can execute concurrently if they use different lock objects, allowing for more fine-grained control over synchronization.
+
+Which approach to choose depends on the specific requirements of the code:
+
+- Synchronized methods are preferable when the entire method needs to be synchronized, and you don't need to control the locking granularity.
+- Synchronized blocks are useful when you want to synchronize only a specific section of code or when you need finer control over the locking mechanism.
+
+In general, it is recommended to use synchronized methods when the synchronization is applied to the whole method, and synchronized blocks when more granular control is needed.
+
+<br>
 
 ## How can you create and work with threads in Java?
 
@@ -3165,3 +3373,399 @@ In the above example, a `ReentrantLock` is used to synchronize access to the Has
 By manually synchronizing access to the HashMap using locks, you can achieve thread-safety. However, it's important to note that this approach requires careful handling and can potentially lead to performance degradation if many threads contend for the lock frequently. In such cases, using the built-in concurrent data structures like ConcurrentHashMap is often a more efficient and scalable solution.
 
 <br>
+
+## How HashSet is implemented internally?
+
+<br>
+
+HashSet in Java is implemented internally using a HashMap. It uses the HashMap's underlying data structure to store its elements. The elements of a HashSet are stored as keys in the HashMap, and the corresponding values in the HashMap are a constant dummy object (`PRESENT`).
+
+When an element is added to a HashSet, it is inserted into the underlying HashMap as a key with the dummy object (`PRESENT`) as its value. Since a HashMap does not allow duplicate keys, it automatically ensures that the elements of a HashSet are unique.
+
+Here's a simplified overview of how HashSet uses a HashMap internally:
+
+1. When a HashSet is created, it internally creates an empty HashMap.
+
+2. When an element is added to the HashSet using the `add()` method, it internally calls the `put()` method of the HashMap, where the element becomes a key and the dummy object (`PRESENT`) becomes its value.
+
+3. When an element is removed from the HashSet using the `remove()` method, it internally calls the `remove()` method of the HashMap, passing the element as the key.
+
+4. When checking for the presence of an element in the HashSet using the `contains()` method, it internally calls the `containsKey()` method of the HashMap, passing the element as the key.
+
+5. Other operations of the HashSet, such as size retrieval, iteration, and checking for emptiness, are also delegated to the corresponding methods of the underlying HashMap.
+
+By utilizing the HashMap's efficient key-value storage and lookup mechanism, HashSet provides constant-time performance for basic operations like adding, removing, and checking for the presence of elements, as long as the hash function and equals method of the elements are properly implemented.
+
+It's important to note that since HashSet relies on the HashMap implementation, the iteration order of a HashSet is not guaranteed to be in any particular order. If you require a specific iteration order, you can use the LinkedHashSet class, which maintains insertion order using a combination of a HashSet and a linked list.
+
+<br>
+
+## How to create an immutable class in Java?
+
+<br>
+
+To create an immutable class in Java, you can follow these guidelines:
+
+1. Make the class `final`: This prevents the class from being extended and modified by other classes.
+
+2. Declare all fields as `private` and `final`: This ensures that the fields cannot be modified once initialized.
+
+3. Do not provide any setter methods: This prevents external modification of the class's state.
+
+4. Make sure that the class does not expose any mutable objects: If the class contains references to mutable objects, make sure to either clone the objects or return defensive copies to prevent modification.
+
+5. Provide only getter methods: Getter methods can be used to access the values of the immutable class's fields.
+
+6. Ensure that any mutable objects within the class are safely encapsulated: If the class contains references to mutable objects, ensure that those objects are also immutable or effectively encapsulated to maintain immutability.
+
+7. Initialize all fields in the constructor: The constructor should initialize all the fields using constructor arguments or by creating new instances.
+
+8. Avoid exposing any methods that can modify the state of the class: Methods that modify the state should be avoided to maintain immutability.
+
+Here's an example of an immutable class in Java:
+
+```java
+public final class ImmutablePerson {
+    private final String name;
+    private final int age;
+    private final List<String> hobbies;
+
+    public ImmutablePerson(String name, int age, List<String> hobbies) {
+        this.name = name;
+        this.age = age;
+        this.hobbies = new ArrayList<>(hobbies);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public List<String> getHobbies() {
+        return new ArrayList<>(hobbies);
+    }
+}
+```
+
+In the example above, the `ImmutablePerson` class is declared as `final` to prevent subclassing. The fields `name`, `age`, and `hobbies` are declared as `private` and `final`. The constructor initializes all the fields, and the getter methods are provided to access the field values. The `hobbies` field is defensively copied to ensure that external modifications to the original list do not affect the immutability of the class.
+
+By following these guidelines, you can create a class that is immutable, meaning its state cannot be modified after creation. Immutable classes are thread-safe, can be safely shared across multiple threads, and are generally more predictable and easier to reason about.
+
+<br>
+
+## If the class contains custom classes as data members, how we can make the class as immutable?
+
+<br>
+
+If a class contains custom classes as data members and you want to make the class immutable, you need to ensure that those custom classes are also immutable or effectively encapsulated. Here are a few approaches you can consider:
+
+1. Immutable Custom Classes: If the custom classes used as data members are already immutable, meaning their state cannot be modified after creation, you can use them directly in your immutable class without any modifications. Immutable classes ensure that their state remains constant, making them suitable for use in other immutable classes.
+
+2. Defensive Copying: If the custom classes are mutable or you don't have control over their immutability, you can create defensive copies of those objects in the constructor or getter methods of the immutable class. By returning a copy of the custom object instead of the original reference, you prevent external modification of the object's state. However, keep in mind that this approach may impact performance if the custom object is large.
+
+3. Effective Encapsulation: If the custom classes are mutable and cannot be modified to become immutable, you can ensure effective encapsulation within the immutable class. This means that you should not expose the mutable custom objects directly through getter methods. Instead, you can return defensive copies or provide read-only views of those objects to prevent external modification.
+
+Here's an example illustrating these approaches:
+
+```java
+public final class ImmutablePerson {
+    private final String name;
+    private final int age;
+    private final Address address;
+
+    public ImmutablePerson(String name, int age, Address address) {
+        this.name = name;
+        this.age = age;
+        this.address = new Address(address.getStreet(), address.getCity(), address.getCountry());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Address getAddress() {
+        return new Address(address.getStreet(), address.getCity(), address.getCountry());
+    }
+}
+```
+
+In the example above, the `ImmutablePerson` class contains a custom `Address` object. The `Address` class is assumed to be mutable. In the constructor and the `getAddress()` method, a new `Address` object is created using the values from the original `Address` object. This ensures that the `address` field remains immutable and external modifications to the original `Address` object do not affect the immutability of the `ImmutablePerson` class.
+
+By applying defensive copying or effective encapsulation techniques, you can maintain the immutability of your class even if it contains custom classes as data members.
+
+<br>
+
+## If we want to use an custom object as a key in HashMap, how to proceed with it?
+
+<br>
+
+To use a custom object as a key in a `HashMap`, you need to ensure that the custom object correctly implements the `equals()` and `hashCode()` methods. Here are the steps to proceed:
+
+1. Implement the `equals()` method: The `equals()` method should be overridden to provide the logic for comparing two instances of the custom class. It should define the equality criteria based on the desired attributes of the object. The `equals()` method should return `true` if the two objects are considered equal and `false` otherwise.
+
+2. Implement the `hashCode()` method: The `hashCode()` method should be overridden to generate a unique hash code for each instance of the custom class. The hash code is used by the `HashMap` to determine the bucket where the key-value pair will be stored. The `hashCode()` method should generate consistent hash codes for objects that are considered equal based on the `equals()` method.
+
+3. Consider immutability: If your custom object is mutable, you need to be cautious when using it as a key in a `HashMap`. Modifying the object after it has been used as a key can result in unexpected behavior. It is recommended to make the custom object immutable or ensure that its state remains constant after being used as a key.
+
+Here's an example demonstrating the usage of a custom object as a key in a `HashMap`:
+
+```java
+class CustomKey {
+    private final String keyData;
+
+    public CustomKey(String keyData) {
+        this.keyData = keyData;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        CustomKey other = (CustomKey) obj;
+        return Objects.equals(keyData, other.keyData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keyData);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Map<CustomKey, String> map = new HashMap<>();
+        CustomKey key1 = new CustomKey("key1");
+        CustomKey key2 = new CustomKey("key2");
+
+        map.put(key1, "Value 1");
+        map.put(key2, "Value 2");
+
+        String value1 = map.get(key1);
+        System.out.println(value1);  // Output: Value 1
+
+        String value2 = map.get(key2);
+        System.out.println(value2);  // Output: Value 2
+    }
+}
+```
+
+In the example above, the `CustomKey` class is used as a custom key in the `HashMap`. The `equals()` and `hashCode()` methods are properly implemented to ensure correct comparison and hashing of the `CustomKey` instances. This allows the `HashMap` to store and retrieve values based on the custom key objects.
+
+<br>
+
+## What is a Singleton in Java and how we can achieve it?
+
+<br>
+
+In Java, a Singleton is a design pattern that restricts the instantiation of a class to a single object. It ensures that there is only one instance of the class throughout the application and provides a global point of access to that instance.
+
+To achieve a Singleton in Java, you can follow the following steps:
+
+1. Make the constructor private: This prevents the direct instantiation of the class from outside the class itself.
+
+2. Declare a static variable of the class type: This variable will hold the single instance of the class.
+
+3. Create a static method to get the instance: This method will be responsible for creating the instance if it doesn't exist and returning the instance in all cases.
+
+Here's an example implementation of a Singleton in Java:
+
+```java
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {
+        // Private constructor to prevent instantiation
+    }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+In the above example, the `Singleton` class has a private constructor to prevent direct instantiation. The `instance` variable is declared as `private static`, ensuring that there is only one instance shared among all the callers. The `getInstance()` method is responsible for creating the instance if it is not already created and returning the instance.
+
+The usage of the Singleton would be as follows:
+
+```java
+Singleton singleton = Singleton.getInstance();
+```
+
+The `getInstance()` method ensures that only one instance of the `Singleton` class is created and returned each time it is called.
+
+It's important to note that while the Singleton pattern can be useful in certain scenarios, it should be used judiciously as it can introduce global state and make testing and maintaining the code more challenging.
+
+<br>
+
+## Other than using synchronized keyword at the method level, what are the other best alternative ways to create singleton in multi-threaded environment? Explain with code examples.
+
+<br>
+
+Apart from using the `synchronized` keyword at the method level, there are two commonly used alternative approaches to implement a thread-safe Singleton in a multi-threaded environment: 
+
+1. Double-Checked Locking
+
+The double-checked locking approach minimizes the use of synchronization by checking the instance variable for null inside a synchronized block. It ensures that only the first thread that accesses the instance creates the singleton, while subsequent threads directly return the already created instance.
+
+```java
+public class Singleton {
+    private static volatile Singleton instance;
+    private String message;
+
+    private Singleton() {
+        message = "Hello, Singleton!";
+    }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+```
+
+In this approach, the `volatile` keyword is used on the `instance` variable. This ensures that changes made to the `instance` variable are immediately visible to other threads. The double-checked locking is performed to avoid unnecessary synchronization after the instance has been created.
+
+2. Initialization-on-demand Holder Idiom
+
+The initialization-on-demand holder idiom leverages the fact that inner static classes are only loaded and initialized when they are accessed for the first time. This approach guarantees thread safety without the need for explicit synchronization.
+
+```java
+public class Singleton {
+    private Singleton() {
+        message = "Hello, Singleton!";
+    }
+
+    private static class SingletonHolder {
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    public static Singleton getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+}
+```
+
+In this approach, the Singleton class has a private constructor and a private static inner class called SingletonHolder. The inner class holds the instance of the Singleton and is only loaded and initialized when `getInstance()` is called. This approach benefits from the lazy initialization of the Singleton instance, along with the inherent thread safety of class loading.
+
+Both the double-checked locking and initialization-on-demand holder idiom approaches provide thread-safe implementations of the Singleton pattern without incurring the performance cost of synchronization on every method call. They allow multiple threads to access the singleton concurrently without the risk of creating multiple instances.
+
+<br>
+
+## How we can break Singleton pattern?
+
+<br>
+
+The Singleton pattern is designed to provide a single instance of a class throughout the application, and breaking the Singleton pattern intentionally goes against its intended usage. However, there are a few ways in which the Singleton pattern can be broken, depending on the specific implementation:
+
+1. Reflection: By using Java reflection APIs, it is possible to access the private constructor of a Singleton class and create multiple instances. The `setAccessible(true)` method allows overriding the access modifiers of the constructor, enabling the creation of new instances.
+
+2. Serialization and Deserialization: When a Singleton class is serialized and then deserialized, the deserialization process creates a new instance of the class. This breaks the Singleton pattern since multiple instances can exist.
+
+3. Multiple Class Loaders: If a Java application is running with multiple class loaders, each class loader can potentially create its own instance of the Singleton class, leading to multiple instances.
+
+4. Cloning: If a Singleton class implements the `Cloneable` interface and provides a public `clone()` method, it becomes possible to create a new instance of the class through cloning.
+
+It's important to note that breaking the Singleton pattern intentionally is generally not recommended and can introduce unexpected behavior and violate the intended design principles. The Singleton pattern is meant to ensure a single instance of a class, and deliberately breaking it can lead to code inconsistencies and potential issues in the application.
+
+<br>
+
+## Explain Factory Design Pattern with relavent example.
+
+<br>
+
+The Factory Design Pattern is a creational design pattern that provides an interface for creating objects, but allows subclasses to decide which class to instantiate. It encapsulates the object creation logic and provides a way to delegate the object creation to subclasses or other specialized factory methods.
+
+Here is an example to illustrate the Factory Design Pattern:
+
+```java
+// Product interface
+interface Shape {
+    void draw();
+}
+
+// Concrete product classes
+class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle");
+    }
+}
+
+class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle");
+    }
+}
+
+// Factory class
+class ShapeFactory {
+    public Shape createShape(String shapeType) {
+        if (shapeType.equalsIgnoreCase("circle")) {
+            return new Circle();
+        } else if (shapeType.equalsIgnoreCase("rectangle")) {
+            return new Rectangle();
+        }
+        // Handle other shape types or return null/throw exception as needed
+        return null;
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        ShapeFactory factory = new ShapeFactory();
+
+        // Creating objects using the factory
+        Shape circle = factory.createShape("circle");
+        Shape rectangle = factory.createShape("rectangle");
+
+        // Calling the draw method on the created objects
+        circle.draw();      // Output: Drawing a circle
+        rectangle.draw();   // Output: Drawing a rectangle
+    }
+}
+```
+
+In the above example, we have a `Shape` interface representing the product objects. We have concrete classes `Circle` and `Rectangle` that implement the `Shape` interface.
+
+The `ShapeFactory` is the factory class responsible for creating objects of the `Shape` interface. It has a `createShape()` method that takes a shape type as input and returns the corresponding `Shape` object. Based on the shape type, it instantiates and returns the appropriate concrete class.
+
+The client code (`Main` class) uses the `ShapeFactory` to create objects of different shapes without knowing the specific implementation details. It calls the `draw()` method on the created objects, and the actual implementation of the `draw()` method is determined by the concrete classes.
+
+The Factory Design Pattern allows for easy extension and flexibility by centralizing the object creation logic in the factory class. If new types of shapes are added in the future, we can simply modify the factory class to handle the new types without changing the client code.
+
