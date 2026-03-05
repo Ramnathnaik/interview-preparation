@@ -92,6 +92,7 @@ git branch -d <<branch-name>> # Delete a branch
 ## Handling situations
 
 - <b>Committed to the wrong branch</b>
+
   Consider you are working on a main branch. You want to build a feature. So you create a feature branch and start working on it. But you did not switch to the feature branch. Then you commit the code to main branch. This is a bad practice.
 
 In this situation, you can cherry-pick the commit to the feature branch.
@@ -113,4 +114,26 @@ Then you can reset the main branch to the specific commit. For example, if you h
 
 ```bash
 git reset --hard HEAD~2
+```
+
+- <b>Deleted a branch</b>
+
+Consider you are working on a feature branch and you completed the feature. Than you switched to the main branch. After some days you thought that the feature is not needed. So you delete the feature branch.
+
+In this situation, the commits of the deleted branch becomes dangling commits.
+
+These dangling commits will be deleted automatically after 30 days.
+
+Before the deletion you can get them back into a new branch.
+
+We have a command called reflog which shows the track the history of HEAD movement through the branches.
+
+```bash
+git reflog
+```
+
+In the reflog you can find the commit hash of the dangling commits. Then you can create a new branch from that commit hash.
+
+```bash
+git checkout -b <<branch-name>> <<commit-hash>>
 ```
