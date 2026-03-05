@@ -88,3 +88,29 @@ There are 2 types of merge
 ```bash
 git branch -d <<branch-name>> # Delete a branch
 ```
+
+## Handling situations
+
+- <b>Committed to the wrong branch</b>
+  Consider you are working on a main branch. You want to build a feature. So you create a feature branch and start working on it. But you did not switch to the feature branch. Then you commit the code to main branch. This is a bad practice.
+
+In this situation, you can cherry-pick the commit to the feature branch.
+
+```bash
+git checkout feature
+git cherry-pick <<commit-hash>>
+```
+
+Note: You should always cherry-pick the commit from the bottom. For example, if you have two commits, then you should start from the bottom and cherry-pick the commit from the bottom.
+
+Once you have cherry-picked the commit, you can switch back to the main branch.
+
+```bash
+git checkout main
+```
+
+Then you can reset the main branch to the specific commit. For example, if you have two commits to reset than you can use the following command.
+
+```bash
+git reset --hard HEAD~2
+```
